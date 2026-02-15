@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Login Guru - Sistem Dispensasi Siswa SMP 1 Kudus">
+    <title>Login Guru - Dispensasi Siswa</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Animated Background -->
+    <div class="bg-animated">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <div class="login-container">
+        <div class="login-box">
+            <div class="hero" style="padding: 2rem 0;">
+                <img src="logo-smp1kudus.png" alt="SMP 1 Kudus" class="hero-logo-img">
+                <h1>Portal Guru</h1>
+                <p>Kelola dispensasi siswa</p>
+            </div>
+
+            <div class="card">
+                <div class="card-glow"></div>
+
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <div class="input-icon">
+                            <input type="text" id="username" placeholder="Masukkan username" required
+                                autocomplete="username">
+                            <i class="fas fa-user"></i>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <div class="input-icon password-input-wrapper">
+                            <input type="password" id="password" placeholder="Masukkan password" required
+                                autocomplete="current-password">
+                            <i class="fas fa-lock"></i>
+                            <button type="button" class="password-toggle" id="password-toggle"
+                                onclick="togglePassword()">
+                                <i class="fas fa-eye" id="toggle-icon"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="login-error" class="alert alert-danger hidden">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span>Username atau password salah!</span>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block btn-lg" id="login-btn">
+                        <i class="fas fa-sign-in-alt"></i> Masuk
+                    </button>
+                </form>
+            </div>
+
+            <div class="text-center mt-2">
+                <a href="index.html" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Kembali ke Halaman Siswa
+                </a>
+            </div>
+
+            <!-- Footer -->
+            <footer class="site-footer" style="position: relative; margin-top: 2rem;">
+                <div class="footer-content">
+                    <p>Made By <strong>Fawwaz</strong></p>
+                    <a href="https://instagram.com/fawwzxx" target="_blank" class="footer-social">
+                        <i class="fab fa-instagram"></i> @fawwzxx
+                    </a>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        // Check if already logged in
+        const currentTeacher = getCurrentTeacher();
+        if (currentTeacher) {
+            window.location.href = 'teacher-dashboard.html';
+        }
+
+        // Toggle password visibility
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.getElementById('toggle-icon');
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            }
+        }
+
+        // Login form
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const btn = document.getElementById('login-btn');
+            const errorDiv = document.getElementById('login-error');
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Memproses...';
+            errorDiv.classList.add('hidden');
+
+            const teacher = await teacherLogin(username, password);
+
+            if (teacher) {
+                window.location.href = 'teacher-dashboard.html';
+            } else {
+                errorDiv.classList.remove('hidden');
+                document.getElementById('login-form').classList.add('shake');
+                setTimeout(() => {
+                    document.getElementById('login-form').classList.remove('shake');
+                }, 500);
+            }
+
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Masuk';
+        });
+    </script>
+</body>
+
+</html>

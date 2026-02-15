@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dashboard Guru - Kelola permintaan dispensasi siswa SMP 1 Kudus">
+    <title>Dashboard Guru - Dispensasi Siswa</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Animated Background -->
+    <div class="bg-animated">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <div class="dashboard">
+        <!-- Navbar -->
+        <nav class="navbar">
+            <a href="#" class="navbar-brand">
+                <img src="logo-smp1kudus.png" alt="SMP 1 Kudus" class="navbar-logo">
+                Dispensasi Siswa
+            </a>
+            <div class="navbar-user">
+                <div class="user-info">
+                    <div class="name" id="teacher-name">-</div>
+                    <div class="role">Guru</div>
+                </div>
+                <div class="user-avatar" id="teacher-avatar">G</div>
+                <button class="btn btn-secondary btn-sm" onclick="teacherLogout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </nav>
+
+        <div class="container">
+            <!-- Clock Widget -->
+            <div class="clock-widget">
+                <div class="clock-time" id="clock-time">00:00:00</div>
+                <div class="clock-date" id="clock-date">-</div>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon warning">
+                        <i class="fas fa-hourglass-half"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="pending-count">0</h3>
+                        <p>Menunggu Persetujuan</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon success">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="approved-count">0</h3>
+                        <p>Disetujui Hari Ini</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon danger">
+                        <i class="fas fa-times-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="rejected-count">0</h3>
+                        <p>Ditolak Hari Ini</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon primary">
+                        <i class="fas fa-flag-checkered"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="completed-count">0</h3>
+                        <p>Selesai</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pending Requests -->
+            <div class="card mb-3">
+                <div class="card-glow"></div>
+                <div class="card-header">
+                    <h2><i class="fas fa-clock"></i> Permintaan Pending</h2>
+                    <button class="btn btn-secondary btn-sm" onclick="loadDashboard()">
+                        <i class="fas fa-sync-alt"></i> Refresh
+                    </button>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Kode</th>
+                                <th>Siswa</th>
+                                <th>Kelas</th>
+                                <th>Alasan</th>
+                                <th>Waktu</th>
+                                <th>Foto</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="pending-table">
+                            <tr>
+                                <td colspan="7" class="text-center"
+                                    style="color: var(--text-secondary); padding: 2rem;">
+                                    <i class="fas fa-inbox"
+                                        style="font-size: 2rem; display: block; margin-bottom: 0.5rem; opacity: 0.3;"></i>
+                                    Tidak ada permintaan pending
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- History -->
+            <div class="card">
+                <div class="card-glow"></div>
+                <div class="card-header">
+                    <h2><i class="fas fa-history"></i> Riwayat Dispensasi</h2>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Kode</th>
+                                <th>Siswa</th>
+                                <th>Kelas</th>
+                                <th>Alasan</th>
+                                <th>Waktu</th>
+                                <th>Status</th>
+                                <th>Diproses Oleh</th>
+                            </tr>
+                        </thead>
+                        <tbody id="history-table">
+                            <tr>
+                                <td colspan="7" class="text-center"
+                                    style="color: var(--text-secondary); padding: 2rem;">
+                                    <i class="fas fa-inbox"
+                                        style="font-size: 2rem; display: block; margin-bottom: 0.5rem; opacity: 0.3;"></i>
+                                    Belum ada riwayat
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-content">
+            <p>Made By <strong>Fawwaz</strong></p>
+            <a href="https://instagram.com/fawwzxx" target="_blank" class="footer-social">
+                <i class="fab fa-instagram"></i> @fawwzxx
+            </a>
+        </div>
+    </footer>
+
+    <!-- Confirmation Modal -->
+    <div class="modal-overlay" id="confirm-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="modal-title">Konfirmasi</h3>
+                <button class="modal-close" onclick="hideModal('confirm-modal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p id="modal-message">Apakah Anda yakin?</p>
+                <div id="modal-details" class="mt-2"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="hideModal('confirm-modal')">Batal</button>
+                <button class="btn btn-primary" id="modal-confirm-btn">Konfirmasi</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Photo Preview Modal -->
+    <div class="modal-overlay" id="photo-modal">
+        <div class="modal" style="max-width: 90%; max-height: 90%;">
+            <div class="modal-header">
+                <h3><i class="fas fa-image"></i> Foto Surat Dispensasi</h3>
+                <button class="modal-close" onclick="hideModal('photo-modal')">&times;</button>
+            </div>
+            <div class="modal-body" style="text-align: center;">
+                <img id="modal-photo" src="" style="max-width: 100%; max-height: 70vh; border-radius: 8px;">
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        // Check authentication
+        const currentTeacher = requireTeacherAuth();
+
+        if (currentTeacher) {
+            // Update UI
+            document.getElementById('teacher-name').textContent = currentTeacher.name;
+            document.getElementById('teacher-avatar').textContent = currentTeacher.name.charAt(0).toUpperCase();
+
+            // Start clock
+            startClock('clock-time', 'clock-date');
+
+            // Load dashboard
+            loadDashboard();
+
+            // Auto refresh every 30 seconds
+            setInterval(loadDashboard, 30000);
+        }
+
+        async function loadDashboard() {
+            const dispensations = await getDispensations();
+            const today = new Date().toDateString();
+
+            // Calculate stats
+            const pending = dispensations.filter(d => d.status === 'pending');
+            const approvedToday = dispensations.filter(d =>
+                d.status === 'approved' && new Date(d.createdAt).toDateString() === today
+            );
+            const rejectedToday = dispensations.filter(d =>
+                d.status === 'rejected' && new Date(d.createdAt).toDateString() === today
+            );
+            const completed = dispensations.filter(d => d.status === 'completed');
+
+            // Update stats
+            document.getElementById('pending-count').textContent = pending.length;
+            document.getElementById('approved-count').textContent = approvedToday.length;
+            document.getElementById('rejected-count').textContent = rejectedToday.length;
+            document.getElementById('completed-count').textContent = completed.length;
+
+            // Render tables
+            renderPendingTable(pending);
+            renderHistoryTable(dispensations.filter(d => d.status !== 'pending').slice(-20).reverse());
+        }
+
+        function renderPendingTable(items) {
+            const tbody = document.getElementById('pending-table');
+
+            if (items.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="7" class="text-center" style="color: var(--text-secondary); padding: 2rem;">
+                            <i class="fas fa-inbox" style="font-size: 2rem; display: block; margin-bottom: 0.5rem; opacity: 0.3;"></i>
+                            Tidak ada permintaan pending
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = items.map(item => `
+                <tr>
+                    <td><code class="tracking-code" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;">${item.trackingCode}</code></td>
+                    <td><strong>${item.studentName}</strong></td>
+                    <td>${item.studentClass}</td>
+                    <td>${item.reason}</td>
+                    <td>
+                        <small>Keluar: ${formatDateTime(item.departureTime)}</small><br>
+                        <small>Kembali: ${formatDateTime(item.returnTime)}</small>
+                    </td>
+                    <td>
+                        ${item.photoPath
+                    ? `<img src="${item.photoPath}" alt="Foto" style="width: 50px; height: 50px; object-fit: cover; border-radius: 6px; cursor: pointer;" onclick="showPhoto('${item.photoPath}')">`
+                    : '<small style="color: var(--text-secondary);">-</small>'}
+                    </td>
+                    <td>
+                        <button class="btn btn-success btn-sm" onclick="approveDispensation(${item.id}, '${item.studentName}')" style="margin-right: 0.25rem;">
+                            <i class="fas fa-check"></i>
+                        </button>
+                        <button class="btn btn-danger btn-sm" onclick="rejectDispensation(${item.id}, '${item.studentName}')">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function renderHistoryTable(items) {
+            const tbody = document.getElementById('history-table');
+
+            if (items.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="7" class="text-center" style="color: var(--text-secondary); padding: 2rem;">
+                            <i class="fas fa-inbox" style="font-size: 2rem; display: block; margin-bottom: 0.5rem; opacity: 0.3;"></i>
+                            Belum ada riwayat
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = items.map(item => `
+                <tr>
+                    <td><code style="font-size: 0.75rem;">${item.trackingCode}</code></td>
+                    <td><strong>${item.studentName}</strong></td>
+                    <td>${item.studentClass}</td>
+                    <td>${item.reason}</td>
+                    <td>
+                        <small>Keluar: ${formatDateTime(item.departureTime)}</small><br>
+                        <small>Kembali: ${formatDateTime(item.returnTime)}</small>
+                    </td>
+                    <td>${getStatusBadge(item.status)}</td>
+                    <td>${item.approvedBy || '-'}</td>
+                </tr>
+            `).join('');
+        }
+
+        function showPhoto(src) {
+            document.getElementById('modal-photo').src = src;
+            showModal('photo-modal');
+        }
+
+        function approveDispensation(id, name) {
+            document.getElementById('modal-title').innerHTML = '<i class="fas fa-check-circle" style="color: var(--success);"></i> Setujui Dispensasi';
+            document.getElementById('modal-message').textContent = `Setujui dispensasi untuk ${name}?`;
+            document.getElementById('modal-details').innerHTML = '';
+            document.getElementById('modal-confirm-btn').className = 'btn btn-success';
+            document.getElementById('modal-confirm-btn').innerHTML = '<i class="fas fa-check"></i> Setujui';
+            document.getElementById('modal-confirm-btn').onclick = async () => {
+                await updateDispensationStatus(id, 'approved', currentTeacher.name);
+                hideModal('confirm-modal');
+                loadDashboard();
+                showToast('Dispensasi berhasil disetujui!', 'success');
+            };
+            showModal('confirm-modal');
+        }
+
+        function rejectDispensation(id, name) {
+            document.getElementById('modal-title').innerHTML = '<i class="fas fa-times-circle" style="color: var(--danger);"></i> Tolak Dispensasi';
+            document.getElementById('modal-message').textContent = `Tolak dispensasi untuk ${name}?`;
+            document.getElementById('modal-details').innerHTML = '';
+            document.getElementById('modal-confirm-btn').className = 'btn btn-danger';
+            document.getElementById('modal-confirm-btn').innerHTML = '<i class="fas fa-times"></i> Tolak';
+            document.getElementById('modal-confirm-btn').onclick = async () => {
+                await updateDispensationStatus(id, 'rejected', currentTeacher.name);
+                hideModal('confirm-modal');
+                loadDashboard();
+                showToast('Dispensasi ditolak.', 'warning');
+            };
+            showModal('confirm-modal');
+        }
+    </script>
+</body>
+
+</html>

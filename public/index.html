@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sistem Dispensasi Siswa SMP 1 Kudus - Ajukan izin keluar sekolah dengan mudah">
+    <title>Dispensasi Siswa - Ajukan Izin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Animated Background -->
+    <div class="bg-animated">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="index.html" class="navbar-brand">
+            <img src="logo-spenss.png" alt="SMP 1 Kudus" class="navbar-logo">
+        </a>
+        <div class="navbar-user">
+            <a href="login.html" class="btn btn-secondary btn-sm">
+                <i class="fas fa-user-shield"></i> Login Guru
+            </a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="hero">
+            <img src="logo-smp1kudus.png" alt="SMP 1 Kudus" class="hero-logo-img">
+            <h1>Sistem Dispensasi Siswa</h1>
+            <p>SMP 1 Kudus Ajukan izin keluar sekolah dengan cepat dan mudah</p>
+        </div>
+
+        <!-- Clock Widget -->
+        <div class="clock-widget">
+            <div class="clock-time" id="clock-time">00:00:00</div>
+            <div class="clock-date" id="clock-date">-</div>
+        </div>
+
+        <div class="grid-2">
+            <!-- Form Pengajuan -->
+            <div class="card">
+                <div class="card-glow"></div>
+                <div class="card-header">
+                    <h2><i class="fas fa-file-alt"></i> Ajukan Dispensasi</h2>
+                </div>
+
+                <form id="dispensation-form" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="student-name">Nama Lengkap</label>
+                        <div class="input-icon">
+                            <input type="text" id="student-name" placeholder="Masukkan nama lengkap" required>
+                            <i class="fas fa-user"></i>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="student-class">Kelas</label>
+                        <select id="student-class" class="form-control" required
+                            style="width: 100%; padding: 0.75rem 1rem; background: var(--bg-glass); border: 1px solid var(--border-color); border-radius: 12px; color: var(--text-primary); font-size: 1rem;">
+                            <option value="">-- Pilih Kelas --</option>
+                            <optgroup label="Kelas 7">
+                                <option value="7A">7A</option>
+                                <option value="7B">7B</option>
+                                <option value="7C">7C</option>
+                                <option value="7D">7D</option>
+                                <option value="7E">7E</option>
+                                <option value="7F">7F</option>
+                                <option value="7G">7G</option>
+                                <option value="7H">7H</option>
+                            </optgroup>
+                            <optgroup label="Kelas 8">
+                                <option value="8A">8A</option>
+                                <option value="8B">8B</option>
+                                <option value="8C">8C</option>
+                                <option value="8D">8D</option>
+                                <option value="8E">8E</option>
+                                <option value="8F">8F</option>
+                                <option value="8G">8G</option>
+                                <option value="8H">8H</option>
+                                <option value="8I">8I</option>
+                            </optgroup>
+                            <optgroup label="Kelas 9">
+                                <option value="9A">9A</option>
+                                <option value="9B">9B</option>
+                                <option value="9C">9C</option>
+                                <option value="9D">9D</option>
+                                <option value="9E">9E</option>
+                                <option value="9F">9F</option>
+                                <option value="9G">9G</option>
+                                <option value="9H">9H</option>
+                            </optgroup>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reason">Alasan Izin</label>
+                        <div class="input-icon">
+                            <input type="text" id="reason" placeholder="Contoh: Izin ke dokter" required>
+                            <i class="fas fa-comment-alt"></i>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="destination">Tujuan</label>
+                        <div class="input-icon">
+                            <input type="text" id="destination" placeholder="Contoh: Rumah Sakit, Rumah">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="departure-time">Waktu Keluar</label>
+                        <input type="datetime-local" id="departure-time" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="return-time">Waktu Kembali</label>
+                        <input type="datetime-local" id="return-time" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="photo-file">Foto Surat Dispensasi (dari Guru BK)</label>
+                        <div class="photo-upload-area" id="photo-upload-area">
+                            <input type="file" id="photo-file" accept="image/*" style="display: none;">
+                            <div class="upload-placeholder" id="upload-placeholder">
+                                <i class="fas fa-cloud-upload-alt"
+                                    style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem;"></i>
+                                <p>Klik untuk memilih foto surat dispensasi</p>
+                                <small style="color: var(--text-secondary);">Maksimal 10MB (JPG, PNG)</small>
+                            </div>
+                            <div class="upload-preview hidden" id="upload-preview">
+                                <img id="preview-image" src="" alt="Preview"
+                                    style="max-width: 100%; max-height: 200px; border-radius: 8px;">
+                                <p id="preview-filename" style="margin-top: 0.5rem; color: var(--text-secondary);"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block btn-lg" id="submit-btn">
+                        <i class="fas fa-paper-plane"></i> Ajukan Dispensasi
+                    </button>
+                </form>
+            </div>
+
+            <!-- Tracking -->
+            <div>
+                <!-- Tracking Card -->
+                <div class="card mb-3">
+                    <div class="card-glow"></div>
+                    <div class="card-header">
+                        <h2><i class="fas fa-search"></i> Cek Status Dispensasi</h2>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tracking-code">Kode Tracking</label>
+                        <div class="input-icon">
+                            <input type="text" id="tracking-code" placeholder="Contoh: DSP-ABC123"
+                                style="text-transform: uppercase;">
+                            <i class="fas fa-search"></i>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-secondary btn-block" onclick="checkStatus()">
+                        <i class="fas fa-search"></i> Cek Status
+                    </button>
+
+                    <div id="tracking-result" class="mt-2 hidden">
+                        <!-- Will be populated dynamically -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-content">
+            <p>Made By <strong>Fawwaz</strong></p>
+            <a href="https://instagram.com/fawwzxx" target="_blank" class="footer-social">
+                <i class="fab fa-instagram"></i> @fawwzxx
+            </a>
+        </div>
+    </footer>
+
+    <!-- Success Modal -->
+    <div class="modal-overlay" id="success-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3><i class="fas fa-check-circle" style="color: var(--success);"></i> Berhasil!</h3>
+                <button class="modal-close" onclick="hideModal('success-modal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="tracking-card">
+                    <p style="margin-bottom: 1rem;">Dispensasi berhasil diajukan! Simpan kode tracking berikut:</p>
+                    <div class="tracking-code" id="new-tracking-code">-</div>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 1rem;">
+                        Gunakan kode ini untuk mengecek status dan konfirmasi kembali.
+                    </p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" onclick="copyTrackingCode()">
+                    <i class="fas fa-copy"></i> Salin Kode
+                </button>
+                <button class="btn btn-secondary" onclick="hideModal('success-modal')">Tutup</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Return Modal -->
+    <div class="modal-overlay" id="return-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3><i class="fas fa-map-marker-alt"></i> Konfirmasi Kembali</h3>
+                <button class="modal-close" onclick="hideModal('return-modal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-warning mb-2">
+                    <i class="fas fa-info-circle"></i>
+                    <strong>Verifikasi Lokasi GPS</strong>
+                </div>
+                <p style="margin-bottom: 1rem;">
+                    Anda harus <strong>berada dalam radius 100 meter dari sekolah</strong> untuk konfirmasi.
+                </p>
+
+                <div id="location-status" class="alert hidden"></div>
+
+                <div class="maps-container" style="height: 200px; margin-top: 1rem;">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.0!2d110.8430016!3d-6.8057694!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNsKwNDgnMjAuOCJTIDExMMKwNTAnMzQuOCJF!5e0!3m2!1sid!2sid"
+                        style="height: 200px;" allowfullscreen="" loading="lazy">
+                    </iframe>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="hideModal('return-modal')">Batal</button>
+                <button class="btn btn-success" id="verify-btn" onclick="verifyAndReturn()">
+                    <i class="fas fa-location-crosshairs"></i> Verifikasi Lokasi
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        let currentDispensation = null;
+
+        // Start clock
+        startClock('clock-time', 'clock-date');
+
+        // Set default times
+        const now = new Date();
+        const nowString = now.toISOString().slice(0, 16);
+        document.getElementById('departure-time').value = nowString;
+        document.getElementById('departure-time').min = nowString;
+        document.getElementById('return-time').min = nowString;
+
+        // Request notification permission
+        requestNotificationPermission();
+
+        // Photo upload area click handler
+        document.getElementById('photo-upload-area').addEventListener('click', () => {
+            document.getElementById('photo-file').click();
+        });
+
+        // File input change handler
+        document.getElementById('photo-file').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const placeholder = document.getElementById('upload-placeholder');
+                const preview = document.getElementById('upload-preview');
+                const previewImage = document.getElementById('preview-image');
+                const previewFilename = document.getElementById('preview-filename');
+
+                if (file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        previewImage.src = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                    previewImage.style.display = 'block';
+                } else {
+                    previewImage.style.display = 'none';
+                }
+
+                previewFilename.textContent = file.name;
+                placeholder.classList.add('hidden');
+                preview.classList.remove('hidden');
+            }
+        });
+
+        // Form submission
+        document.getElementById('dispensation-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const studentName = document.getElementById('student-name').value;
+            const studentClass = document.getElementById('student-class').value;
+            const reason = document.getElementById('reason').value;
+            const destination = document.getElementById('destination').value;
+            const departureTime = document.getElementById('departure-time').value;
+            const returnTime = document.getElementById('return-time').value;
+            const photoFile = document.getElementById('photo-file').files[0];
+
+            // Validate times
+            if (new Date(returnTime) <= new Date(departureTime)) {
+                showToast('Waktu kembali harus setelah waktu keluar!', 'danger');
+                return;
+            }
+
+            // Anti-spam check (client-side)
+            const lastSubmit = localStorage.getItem('lastDispSubmit');
+            if (lastSubmit) {
+                const elapsed = Date.now() - parseInt(lastSubmit);
+                if (elapsed < 30000) { // 30 seconds
+                    showToast('Jangan Iseng Atuhh :(', 'danger');
+                    return;
+                }
+            }
+
+            // Disable button
+            const btn = document.getElementById('submit-btn');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Memproses...';
+
+            try {
+                const formData = new FormData();
+                formData.append('studentName', studentName);
+                formData.append('studentClass', studentClass);
+                formData.append('reason', reason);
+                formData.append('destination', destination);
+                formData.append('departureTime', departureTime);
+                formData.append('returnTime', returnTime);
+                if (photoFile) {
+                    formData.append('photo', photoFile);
+                }
+
+                const response = await fetchAPI(`${API_URL}/dispensations`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response) {
+                    const result = response; // fetchAPI returns parsed JSON
+                    localStorage.setItem('lastDispSubmit', Date.now().toString());
+
+                    document.getElementById('new-tracking-code').textContent = result.trackingCode;
+                    showModal('success-modal');
+                    document.getElementById('dispensation-form').reset();
+
+                    // Reset photo preview
+                    document.getElementById('upload-placeholder').classList.remove('hidden');
+                    document.getElementById('upload-preview').classList.add('hidden');
+
+                    // Reset times
+                    document.getElementById('departure-time').value = nowString;
+                }
+            } catch (error) {
+                // fetchAPI handles the toast for connection errors, but we might want to catch other things
+                if (!error.message.includes('Failed to fetch') && !error.message.includes('NetworkError')) {
+                    showToast(error.message || 'Gagal mengajukan dispensasi!', 'danger');
+                }
+            }
+
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-paper-plane"></i> Ajukan Dispensasi';
+        });
+
+        // Check status
+        async function checkStatus() {
+            const code = document.getElementById('tracking-code').value.toUpperCase();
+
+            if (!code) {
+                showToast('Masukkan kode tracking!', 'warning');
+                return;
+            }
+
+            const resultDiv = document.getElementById('tracking-result');
+            resultDiv.classList.remove('hidden');
+            resultDiv.innerHTML = '<div class="text-center"><div class="spinner" style="margin: 0 auto;"></div></div>';
+
+            const dispensation = await getDispensationByCode(code);
+
+            if (dispensation) {
+                currentDispensation = dispensation;
+
+                let statusHtml = `
+                    <div class="status-card ${dispensation.status === 'pending' ? 'pending' : ''}">
+                        <div class="status-header">
+                            <span class="status-title"><i class="fas fa-user"></i> ${dispensation.studentName}</span>
+                            ${getStatusBadge(dispensation.status)}
+                        </div>
+                        <p><strong>Kelas:</strong> ${dispensation.studentClass}</p>
+                        <p><strong>Alasan:</strong> ${dispensation.reason}</p>
+                        <p><strong>Waktu Keluar:</strong> ${formatDateTime(dispensation.departureTime)}</p>
+                        <p><strong>Waktu Kembali:</strong> ${formatDateTime(dispensation.returnTime)}</p>
+                `;
+
+                if (dispensation.status === 'approved') {
+                    statusHtml += `
+                        <p style="color: var(--success);"><strong>Disetujui oleh:</strong> ${dispensation.approvedBy}</p>
+                        <button class="btn btn-success btn-block mt-2" onclick="showModal('return-modal')">
+                            <i class="fas fa-school"></i> Konfirmasi Kembali ke Sekolah
+                        </button>
+                    `;
+                } else if (dispensation.status === 'completed') {
+                    statusHtml += `
+                        <p style="color: var(--primary);"><strong>Kembali pada:</strong> ${formatDateTime(dispensation.returnedAt)}</p>
+                    `;
+                } else if (dispensation.status === 'rejected') {
+                    statusHtml += `
+                        <p style="color: var(--danger);"><i class="fas fa-times-circle"></i> Dispensasi ditolak oleh guru.</p>
+                    `;
+                }
+
+                statusHtml += '</div>';
+                resultDiv.innerHTML = statusHtml;
+            } else {
+                resultDiv.innerHTML = `
+                    <div class="alert alert-danger">
+                        <i class="fas fa-exclamation-circle"></i> 
+                        Kode tracking tidak ditemukan. Pastikan kode benar.
+                    </div>
+                `;
+            }
+        }
+
+        // Copy tracking code
+        function copyTrackingCode() {
+            const code = document.getElementById('new-tracking-code').textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                showToast('Kode tracking berhasil disalin!', 'success');
+            });
+        }
+
+        // Verify and return
+        function verifyAndReturn() {
+            if (!currentDispensation) return;
+
+            const btn = document.getElementById('verify-btn');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Memeriksa...';
+
+            verifyLocationAndReturn(
+                currentDispensation.id,
+                (result) => {
+                    hideModal('return-modal');
+                    showToast('Selamat datang kembali! Dispensasi selesai.', 'success');
+                    checkStatus();
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fas fa-location-crosshairs"></i> Verifikasi Lokasi';
+                },
+                (result) => {
+                    showToast(`Jarak: ${result.distance}m. Harus dalam ${result.requiredRadius}m!`, 'danger');
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fas fa-location-crosshairs"></i> Verifikasi Lokasi';
+                },
+                (error) => {
+                    showToast(error, 'danger');
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fas fa-location-crosshairs"></i> Verifikasi Lokasi';
+                }
+            );
+        }
+    </script>
+</body>
+
+</html>

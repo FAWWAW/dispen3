@@ -1,0 +1,16 @@
+{
+  "name": "dispensasi-siswa",
+  "version": "2.1.0",
+  "description": "Sistem Dispensasi Siswa SMP 1 Kudus",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^4.21.0",
+    "firebase-admin": "^12.0.0",
+    "multer": "^2.0.2",
+    "serverless-http": "^4.0.0"
+  }
+}
